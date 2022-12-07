@@ -1,0 +1,169 @@
+//main.cpp
+
+#include<iostream>
+#include"String.h"
+using namespace std;
+int main()
+{
+	char a[] = "JAWAD";
+	String obj(a);
+	cout << obj.length(a) << endl;
+	String bj1 = obj;
+	bj1.display();
+
+	int pos;
+	int len;
+	cout << "Enter the pos :";
+	cin >> pos;
+	cout << " Enter the length :";
+	cin >> len;
+	String obj1(obj, pos, len);
+	obj1.display();
+	cout << " Enter the index character you want :" << endl;
+	int index;
+	cin >> index;
+	String data(obj);
+	cout << data.at(index,a) << endl;
+	int s;
+	cout << " Enter the character size you want :";
+	cin >> s;
+	String data1(a, s);
+	data1.display();
+	/*String data2;
+	data2.substr(2, 9);
+	data2.display();*/
+
+	system("pause");
+	return 0;
+}
+
+//string.h
+
+class String
+{
+public:
+	String();
+	String(const String& str);
+	String(const String& str, int pos, int len);
+	String(char* s);
+	String(char* s, int n);
+	String(int n, char c);
+	int length(char *);
+	char at(int i,char*);
+	void display();
+	String substr(int pos, int len);
+private:
+	int size;
+	char *name;
+
+};
+
+
+//string.cpp
+
+
+#include<iostream>
+#include"String.h"
+using namespace std;
+String::String(){}
+String::String(const String& str)
+{
+	this->size = str.size;
+	name = new char[size + 1];
+	for (int i = 0; i < size; i++)
+	{
+		name[i] = str.name[i];
+	}
+	name[size] = NULL;
+
+}
+void String::display()
+{
+	cout << name << endl;
+}
+String::String(const String& str, int pos, int len)
+{
+	this->size = str.size;
+	name = new char[size + 1];
+	for (int i = 0; i < size; i++)
+	{
+		name[i] = str.name[i];
+	}
+	name[size] = '\0';
+	if (len>size)
+	{
+		cout << " Length is greter!! " << endl;
+	}
+	else
+	{
+		int k = len - pos + 1;
+		char *arr = new char[k + 1];
+		int j = 0;
+		for (int i = pos; i < len; i++)
+		{
+			arr[j] = name[i];
+			j++;
+		}
+		arr[j] = '\0';
+		delete[] name;
+		name = nullptr;
+		name = new char[k + 1];
+		for (int i = 0; i < k; i++)
+		{
+			name[i] = arr[i];
+		}
+		name[k] = '\0';
+		delete[] arr;
+		arr = nullptr;
+	}
+}
+String::String(char* s)
+{
+	String obj;
+	size = obj.length(s);
+	name = new char[size + 1];
+	for (int i = 0; i < size; i++)
+	{
+		name[i] = s[i];
+	}
+	name[size] = NULL;
+}
+String::String( char *s, int n)
+{
+	size = length(s);
+	name = new char[n + 1];
+	for (int i = 0; i < n; i++)
+	{
+		name[i] = s[i];
+	}
+	name[n] = NULL;
+
+
+
+}
+int String::length(char*n)
+{
+	int count = 0;
+	char *ptr = n;
+	for (int i = 0; n[i] != '\0'; i++)
+	{
+		count++;
+	}
+	return count;
+}
+char String::at(int k,char*c)
+{
+
+
+	int sixe = length(c);
+	for (int i = 0; i < sixe; i++)
+	{
+		if (i == k)
+		{
+			return this->name[i];
+		}
+	}
+
+
+
+}
